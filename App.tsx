@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Button, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
 
 // Importando a modelagem TypeScript que criamos nas aulas anteriores
@@ -26,10 +26,10 @@ export default function App() {
 
   const paciente1: Paciente = {
     id: 1,
-    nome: "Carlos Andrade",
+    nome: "Gustavo Gomes Martins",
     cpf: "123.456.789-00",
-    email: "carlos@email.com",
-    telefone: "(11) 98765-4321",
+    email: "rm555999@fiap.com.br",
+    telefone: "(11) 96447-5266",
   };
 
   // Estado da consulta
@@ -70,32 +70,40 @@ export default function App() {
   function formatarData(data: Date): string {
     return data.toLocaleDateString("pt-BR");
   }
-
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
-      
+
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Cabeçalho */}
         <View style={styles.header}>
+          <Text style={styles.headerIcone}>🏥</Text>
           <Text style={styles.titulo}>Sistema de Consultas</Text>
-          <Text style={styles.subtitulo}>Consulta #{consulta.id}</Text>
+          <Text style={styles.subtitulo}>Gerencie suas consultas médicas</Text>
         </View>
 
         {/* Card da Consulta */}
         <View style={styles.card}>
-          {/* Status Badge */}
-          <View style={[
-            styles.statusBadge,
-            consulta.status === "confirmada" && styles.statusConfirmada,
-            consulta.status === "cancelada" && styles.statusCancelada,
-          ]}>
-            <Text style={styles.statusTexto}>{consulta.status.toUpperCase()}</Text>
+
+          {/* Status + ID */}
+          <View style={styles.statusRow}>
+            <View style={[
+              styles.statusBadge,
+              consulta.status === "confirmada" && styles.statusConfirmada,
+              consulta.status === "cancelada" && styles.statusCancelada,
+            ]}>
+              <View style={styles.statusPonto} />
+              <Text style={styles.statusTexto}>{consulta.status.toUpperCase()}</Text>
+            </View>
+            <Text style={styles.consultaId}>#{consulta.id}</Text>
           </View>
 
           {/* Informações do Médico */}
           <View style={styles.secao}>
-            <Text style={styles.label}>👨‍⚕️ Médico</Text>
+            <View style={styles.secaoHeader}>
+              <Text>👨‍⚕️</Text>
+              <Text style={styles.label}>Médico</Text>
+            </View>
             <Text style={styles.valor}>{consulta.medico.nome}</Text>
             <Text style={styles.info}>CRM: {consulta.medico.crm}</Text>
             <Text style={styles.info}>{consulta.medico.especialidade.nome}</Text>
@@ -103,7 +111,10 @@ export default function App() {
 
           {/* Informações do Paciente */}
           <View style={styles.secao}>
-            <Text style={styles.label}>👤 Paciente</Text>
+            <View style={styles.secaoHeader}>
+              <Text>👤</Text>
+              <Text style={styles.label}>Paciente</Text>
+            </View>
             <Text style={styles.valor}>{consulta.paciente.nome}</Text>
             <Text style={styles.info}>CPF: {consulta.paciente.cpf}</Text>
             <Text style={styles.info}>Email: {consulta.paciente.email}</Text>
@@ -114,11 +125,16 @@ export default function App() {
 
           {/* Informações da Consulta */}
           <View style={styles.secao}>
-            <Text style={styles.label}>📅 Dados da Consulta</Text>
+            <View style={styles.secaoHeader}>
+              <Text>📅</Text>
+              <Text style={styles.label}>Dados da Consulta</Text>
+            </View>
             <Text style={styles.valor}>Data: {formatarData(consulta.data)}</Text>
             <Text style={styles.valor}>Valor: {formatarValor(consulta.valor)}</Text>
             {consulta.observacoes && (
-              <Text style={styles.observacoes}>{consulta.observacoes}</Text>
+              <View style={styles.observacoesBox}>
+                <Text style={styles.observacoes}>"{consulta.observacoes}"</Text>
+              </View>
             )}
           </View>
 
@@ -126,33 +142,34 @@ export default function App() {
           <View style={styles.acoes}>
             {consulta.status === "agendada" && (
               <>
-                <View style={styles.botaoContainer}>
-                  <Button
-                    title="Confirmar Consulta"
-                    onPress={confirmarConsulta}
-                    color="#4CAF50"
-                  />
-                </View>
-                <View style={styles.botaoContainer}>
-                  <Button
-                    title="Cancelar Consulta"
-                    onPress={cancelarConsulta}
-                    color="#F44336"
-                  />
-                </View>
+                <TouchableOpacity style={styles.botaoConfirmar} onPress={confirmarConsulta}>
+                  <Text style={styles.botaoConfirmarTexto}>✓ Confirmar Consulta</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.botaoCancelar} onPress={cancelarConsulta}>
+                  <Text style={styles.botaoCancelarTexto}>✕ Cancelar Consulta</Text>
+                </TouchableOpacity>
               </>
             )}
             {consulta.status === "confirmada" && (
               <View style={styles.mensagem}>
-                <Text style={styles.mensagemTexto}>✓ Consulta confirmada com sucesso!</Text>
+                <Text style={styles.mensagemIcone}>🎉</Text>
+                <Text style={styles.mensagemTexto}>Consulta confirmada!</Text>
+                <Text style={styles.mensagemSubTexto}>Tudo certo, até o dia da consulta.</Text>
               </View>
             )}
             {consulta.status === "cancelada" && (
               <View style={styles.mensagemCancelada}>
-                <Text style={styles.mensagemTexto}>✗ Consulta cancelada</Text>
+                <Text style={styles.mensagemIcone}>❌</Text>
+                <Text style={styles.mensagemTexto}>Consulta cancelada</Text>
+                <Text style={styles.mensagemSubTexto}>Entre em contato para reagendar.</Text>
               </View>
             )}
           </View>
+        </View>
+
+        {/* Rodapé */}
+        <View style={styles.rodape}>
+          <Text style={styles.rodapeTexto}>Sistema de Consultas Médicas · FIAP 2TDSPO</Text>
         </View>
       </ScrollView>
     </View>
@@ -162,119 +179,224 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#79059C",
+    backgroundColor: "#b6fdc99a",
   },
   scrollContent: {
     padding: 20,
-    paddingTop: 40,
+    paddingTop: 50,
+    paddingBottom: 40,
   },
+
+  // ── Header ──────────────────────────────────────────────
   header: {
     alignItems: "center",
-    marginBottom: 24,
+    marginBottom: 28,
+  },
+  headerIcone: {
+    fontSize: 48,
+    marginBottom: 10,
   },
   titulo: {
-    fontSize: 28,
+    fontSize: 30,
     fontWeight: "bold",
     color: "#fff",
-    marginBottom: 8,
+    letterSpacing: 0.5,
+    marginBottom: 4,
   },
   subtitulo: {
-    fontSize: 18,
-    color: "#fff",
-    opacity: 0.9,
+    fontSize: 15,
+    color: "rgba(255,255,255,0.75)",
+    letterSpacing: 0.3,
   },
+
+  // ── Card ────────────────────────────────────────────────
   card: {
     backgroundColor: "#fff",
-    borderRadius: 16,
-    padding: 20,
+    borderRadius: 20,
+    padding: 24,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    elevation: 5,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.25,
+    shadowRadius: 16,
+    elevation: 10,
+  },
+
+  // ── Status Badge ────────────────────────────────────────
+  statusRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 22,
   },
   statusBadge: {
     backgroundColor: "#FFA500",
-    alignSelf: "flex-start",
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 14,
+    paddingVertical: 7,
     borderRadius: 20,
-    marginBottom: 20,
+  },
+  statusPonto: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: "rgba(255,255,255,0.8)",
+    marginRight: 6,
   },
   statusConfirmada: {
-    backgroundColor: "#4CAF50",
+    backgroundColor: "#2E7D32",
   },
   statusCancelada: {
-    backgroundColor: "#F44336",
+    backgroundColor: "#C62828",
   },
   statusTexto: {
     color: "#fff",
     fontWeight: "bold",
-    fontSize: 12,
+    fontSize: 11,
+    letterSpacing: 1,
   },
+  consultaId: {
+    fontSize: 13,
+    color: "#aaa",
+    fontWeight: "500",
+  },
+
+  // ── Seção ────────────────────────────────────────────────
   secao: {
-    marginBottom: 20,
-    paddingBottom: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
+    backgroundColor: "#F9F4FB",
+    borderRadius: 14,
+    padding: 16,
+    marginBottom: 14,
+  },
+  secaoHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
   },
   label: {
-    fontSize: 16,
+    fontSize: 13,
     fontWeight: "bold",
-    color: "#79059C",
-    marginBottom: 8,
+    color: "#350039fc",
+    letterSpacing: 0.5,
+    textTransform: "uppercase",
+    marginLeft: 6,
   },
   valor: {
-    fontSize: 18,
-    color: "#333",
+    fontSize: 17,
+    color: "#1a1a1a",
+    fontWeight: "600",
     marginBottom: 4,
   },
   info: {
-    fontSize: 14,
+    fontSize: 13,
     color: "#666",
-    marginBottom: 2,
+    marginBottom: 3,
+  },
+  observacoesBox: {
+    marginTop: 10,
+    backgroundColor: "#F3E5F5",
+    borderRadius: 8,
+    padding: 10,
+    borderLeftWidth: 3,
+    borderLeftColor: "#710991",
   },
   observacoes: {
-    fontSize: 14,
+    fontSize: 13,
     color: "#555",
     fontStyle: "italic",
-    marginTop: 8,
+    lineHeight: 20,
   },
+
+  // ── Divisor ──────────────────────────────────────────────
+  divisor: {
+    height: 1,
+    backgroundColor: "#EDE7F6",
+    marginVertical: 6,
+  },
+
+  // ── Ações ────────────────────────────────────────────────
   acoes: {
-    marginTop: 10,
+    marginTop: 6,
+    gap: 10,
   },
-  botaoContainer: {
-    marginBottom: 12,
+  botaoConfirmar: {
+    backgroundColor: "#2E7D32",
+    paddingVertical: 14,
+    borderRadius: 12,
+    alignItems: "center",
+    shadowColor: "#2E7D32",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 4,
   },
+  botaoCancelar: {
+    backgroundColor: "#fff",
+    paddingVertical: 14,
+    borderRadius: 12,
+    alignItems: "center",
+    borderWidth: 2,
+    borderColor: "#C62828",
+  },
+  botaoConfirmarTexto: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 15,
+    letterSpacing: 0.5,
+  },
+  botaoCancelarTexto: {
+    color: "#C62828",
+    fontWeight: "bold",
+    fontSize: 15,
+    letterSpacing: 0.5,
+  },
+
+  // ── Mensagens de Feedback ────────────────────────────────
   mensagem: {
     backgroundColor: "#E8F5E9",
-    padding: 16,
-    borderRadius: 8,
-    borderLeftWidth: 4,
-    borderLeftColor: "#4CAF50",
+    padding: 18,
+    borderRadius: 14,
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#A5D6A7",
   },
   mensagemCancelada: {
     backgroundColor: "#FFEBEE",
-    padding: 16,
-    borderRadius: 8,
-    borderLeftWidth: 4,
-    borderLeftColor: "#F44336",
+    padding: 18,
+    borderRadius: 14,
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#FFCDD2",
+  },
+  mensagemIcone: {
+    fontSize: 30,
+    marginBottom: 6,
   },
   mensagemTexto: {
-    fontSize: 16,
+    fontSize: 15,
     color: "#333",
-    fontWeight: "600",
+    fontWeight: "700",
     textAlign: "center",
   },
+  mensagemSubTexto: {
+    fontSize: 12,
+    color: "#666",
+    textAlign: "center",
+    marginTop: 4,
+  },
+
+  // ── Rodapé ────────────────────────────────────────────────
   rodape: {
     marginTop: 24,
     padding: 16,
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
-    borderRadius: 12,
+    backgroundColor: "rgba(255, 255, 255, 0.08)",
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.12)",
   },
   rodapeTexto: {
     fontSize: 12,
-    color: "#fff",
+    color: "rgba(255,255,255,0.6)",
     textAlign: "center",
     lineHeight: 18,
   },
