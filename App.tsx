@@ -179,7 +179,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#b6fdc99a",
+    backgroundColor: "#2a0034",
   },
   scrollContent: {
     padding: 20,
