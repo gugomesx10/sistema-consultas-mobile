@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { StatusBar } from "expo-status-bar";
 
-// Importando a modelagem TypeScript que criamos nas aulas anteriores
+// Importando a modelagem TypeScript
 import { Especialidade } from "./src/types/especialidade";
 import { Paciente } from "./src/types/paciente";
 import { Medico } from "./src/interfaces/medico";
 import { Consulta } from "./src/interfaces/consulta";
+
+// Importando o componente reutilizável
+import {ConsultaCard} from "./src/components/ConsultaCard";
 
 export default function App() {
   // Dados base (simulando o que tínhamos no backend)
@@ -26,10 +29,10 @@ export default function App() {
 
   const paciente1: Paciente = {
     id: 1,
-    nome: "Gustavo Gomes Martins",
+    nome: "Carlos Andrade",
     cpf: "123.456.789-00",
-    email: "rm555999@fiap.com.br",
-    telefone: "(11) 96447-5266",
+    email: "carlos@email.com",
+    telefone: "(11) 98765-4321",
   };
 
   // Estado da consulta
@@ -43,7 +46,13 @@ export default function App() {
     observacoes: "Consulta de rotina",
   });
 
-  // Funções para manipular a consulta
+  /**
+   * Funções para manipular a consulta
+   * 
+   * Essas funções serão passadas como props para o componente.
+   * O componente não altera o estado diretamente - ele apenas
+   * "comunica" ao pai (App) que uma ação foi solicitada.
+   */
   function confirmarConsulta() {
     setConsulta({
       ...consulta,
@@ -58,18 +67,6 @@ export default function App() {
     });
   }
 
-  // Função para formatar valor em reais
-  function formatarValor(valor: number): string {
-    return valor.toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    });
-  }
-
-  // Função para formatar data
-  function formatarData(data: Date): string {
-    return data.toLocaleDateString("pt-BR");
-  }
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
@@ -77,327 +74,79 @@ export default function App() {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Cabeçalho */}
         <View style={styles.header}>
-          <Text style={styles.headerIcone}>🏥</Text>
           <Text style={styles.titulo}>Sistema de Consultas</Text>
-          <Text style={styles.subtitulo}>Gerencie suas consultas médicas</Text>
+          <Text style={styles.subtitulo}>Consulta #{consulta.id}</Text>
         </View>
 
-        {/* Card da Consulta */}
-        <View style={styles.card}>
+        {/* 
+          Componente ConsultaCard
+          
+          Veja como ficou mais simples!
+          Antes: ~100 linhas de JSX no App.tsx
+          Agora: 1 componente reutilizável
+          
+          Props:
+          - consulta: objeto com todos os dados
+          - onConfirmar: função a ser chamada ao confirmar
+          - onCancelar: função a ser chamada ao cancelar
+        */}
+        <ConsultaCard
+          consulta={consulta}
+          onConfirmar={confirmarConsulta}
+          onCancelar={cancelarConsulta}
+        />
 
-          {/* Status + ID */}
-          <View style={styles.statusRow}>
-            <View style={[
-              styles.statusBadge,
-              consulta.status === "confirmada" && styles.statusConfirmada,
-              consulta.status === "cancelada" && styles.statusCancelada,
-            ]}>
-              <View style={styles.statusPonto} />
-              <Text style={styles.statusTexto}>{consulta.status.toUpperCase()}</Text>
-            </View>
-            <Text style={styles.consultaId}>#{consulta.id}</Text>
-          </View>
-
-          {/* Informações do Médico */}
-          <View style={styles.secao}>
-            <View style={styles.secaoHeader}>
-              <Text>👨‍⚕️</Text>
-              <Text style={styles.label}>Médico</Text>
-            </View>
-            <Text style={styles.valor}>{consulta.medico.nome}</Text>
-            <Text style={styles.info}>CRM: {consulta.medico.crm}</Text>
-            <Text style={styles.info}>{consulta.medico.especialidade.nome}</Text>
-          </View>
-
-          {/* Informações do Paciente */}
-          <View style={styles.secao}>
-            <View style={styles.secaoHeader}>
-              <Text>👤</Text>
-              <Text style={styles.label}>Paciente</Text>
-            </View>
-            <Text style={styles.valor}>{consulta.paciente.nome}</Text>
-            <Text style={styles.info}>CPF: {consulta.paciente.cpf}</Text>
-            <Text style={styles.info}>Email: {consulta.paciente.email}</Text>
-            {consulta.paciente.telefone && (
-              <Text style={styles.info}>Tel: {consulta.paciente.telefone}</Text>
-            )}
-          </View>
-
-          {/* Informações da Consulta */}
-          <View style={styles.secao}>
-            <View style={styles.secaoHeader}>
-              <Text>📅</Text>
-              <Text style={styles.label}>Dados da Consulta</Text>
-            </View>
-            <Text style={styles.valor}>Data: {formatarData(consulta.data)}</Text>
-            <Text style={styles.valor}>Valor: {formatarValor(consulta.valor)}</Text>
-            {consulta.observacoes && (
-              <View style={styles.observacoesBox}>
-                <Text style={styles.observacoes}>"{consulta.observacoes}"</Text>
-              </View>
-            )}
-          </View>
-
-          {/* Botões de Ação */}
-          <View style={styles.acoes}>
-            {consulta.status === "agendada" && (
-              <>
-                <TouchableOpacity style={styles.botaoConfirmar} onPress={confirmarConsulta}>
-                  <Text style={styles.botaoConfirmarTexto}>✓ Confirmar Consulta</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.botaoCancelar} onPress={cancelarConsulta}>
-                  <Text style={styles.botaoCancelarTexto}>✕ Cancelar Consulta</Text>
-                </TouchableOpacity>
-              </>
-            )}
-            {consulta.status === "confirmada" && (
-              <View style={styles.mensagem}>
-                <Text style={styles.mensagemIcone}>🎉</Text>
-                <Text style={styles.mensagemTexto}>Consulta confirmada!</Text>
-                <Text style={styles.mensagemSubTexto}>Tudo certo, até o dia da consulta.</Text>
-              </View>
-            )}
-            {consulta.status === "cancelada" && (
-              <View style={styles.mensagemCancelada}>
-                <Text style={styles.mensagemIcone}>❌</Text>
-                <Text style={styles.mensagemTexto}>Consulta cancelada</Text>
-                <Text style={styles.mensagemSubTexto}>Entre em contato para reagendar.</Text>
-              </View>
-            )}
-          </View>
-        </View>
-
-        {/* Rodapé */}
-        <View style={styles.rodape}>
-          <Text style={styles.rodapeTexto}>Sistema de Consultas Médicas · FIAP 2TDSPO</Text>
-        </View>
       </ScrollView>
     </View>
   );
 }
 
+/**
+ * Estilos do App
+ * 
+ * Note que removemos TODOS os estilos do card!
+ * Eles agora estão encapsulados no componente ConsultaCard.
+ * 
+ * App.tsx agora só tem estilos de layout geral:
+ * - Container principal
+ * - Cabeçalho
+ * - Rodapé
+ */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#2a0034",
+    backgroundColor: "#79059C",
   },
   scrollContent: {
     padding: 20,
-    paddingTop: 50,
-    paddingBottom: 40,
+    paddingTop: 60,
   },
-
-  // ── Header ──────────────────────────────────────────────
   header: {
     alignItems: "center",
-    marginBottom: 28,
-  },
-  headerIcone: {
-    fontSize: 48,
-    marginBottom: 10,
+    marginBottom: 24,
   },
   titulo: {
-    fontSize: 30,
+    fontSize: 28,
     fontWeight: "bold",
     color: "#fff",
-    letterSpacing: 0.5,
-    marginBottom: 4,
+    marginBottom: 8,
   },
   subtitulo: {
-    fontSize: 15,
-    color: "rgba(255,255,255,0.75)",
-    letterSpacing: 0.3,
-  },
-
-  // ── Card ────────────────────────────────────────────────
-  card: {
-    backgroundColor: "#fff",
-    borderRadius: 20,
-    padding: 24,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.25,
-    shadowRadius: 16,
-    elevation: 10,
-  },
-
-  // ── Status Badge ────────────────────────────────────────
-  statusRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 22,
-  },
-  statusBadge: {
-    backgroundColor: "#FFA500",
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 14,
-    paddingVertical: 7,
-    borderRadius: 20,
-  },
-  statusPonto: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: "rgba(255,255,255,0.8)",
-    marginRight: 6,
-  },
-  statusConfirmada: {
-    backgroundColor: "#2E7D32",
-  },
-  statusCancelada: {
-    backgroundColor: "#C62828",
-  },
-  statusTexto: {
+    fontSize: 18,
     color: "#fff",
-    fontWeight: "bold",
-    fontSize: 11,
-    letterSpacing: 1,
+    opacity: 0.9,
   },
-  consultaId: {
-    fontSize: 13,
-    color: "#aaa",
-    fontWeight: "500",
-  },
-
-  // ── Seção ────────────────────────────────────────────────
-  secao: {
-    backgroundColor: "#F9F4FB",
-    borderRadius: 14,
-    padding: 16,
-    marginBottom: 14,
-  },
-  secaoHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 10,
-  },
-  label: {
-    fontSize: 13,
-    fontWeight: "bold",
-    color: "#350039fc",
-    letterSpacing: 0.5,
-    textTransform: "uppercase",
-    marginLeft: 6,
-  },
-  valor: {
-    fontSize: 17,
-    color: "#1a1a1a",
-    fontWeight: "600",
-    marginBottom: 4,
-  },
-  info: {
-    fontSize: 13,
-    color: "#666",
-    marginBottom: 3,
-  },
-  observacoesBox: {
-    marginTop: 10,
-    backgroundColor: "#F3E5F5",
-    borderRadius: 8,
-    padding: 10,
-    borderLeftWidth: 3,
-    borderLeftColor: "#710991",
-  },
-  observacoes: {
-    fontSize: 13,
-    color: "#555",
-    fontStyle: "italic",
-    lineHeight: 20,
-  },
-
-  // ── Divisor ──────────────────────────────────────────────
-  divisor: {
-    height: 1,
-    backgroundColor: "#EDE7F6",
-    marginVertical: 6,
-  },
-
-  // ── Ações ────────────────────────────────────────────────
-  acoes: {
-    marginTop: 6,
-    gap: 10,
-  },
-  botaoConfirmar: {
-    backgroundColor: "#2E7D32",
-    paddingVertical: 14,
-    borderRadius: 12,
-    alignItems: "center",
-    shadowColor: "#2E7D32",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 6,
-    elevation: 4,
-  },
-  botaoCancelar: {
-    backgroundColor: "#fff",
-    paddingVertical: 14,
-    borderRadius: 12,
-    alignItems: "center",
-    borderWidth: 2,
-    borderColor: "#C62828",
-  },
-  botaoConfirmarTexto: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: 15,
-    letterSpacing: 0.5,
-  },
-  botaoCancelarTexto: {
-    color: "#C62828",
-    fontWeight: "bold",
-    fontSize: 15,
-    letterSpacing: 0.5,
-  },
-
-  // ── Mensagens de Feedback ────────────────────────────────
-  mensagem: {
-    backgroundColor: "#E8F5E9",
-    padding: 18,
-    borderRadius: 14,
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#A5D6A7",
-  },
-  mensagemCancelada: {
-    backgroundColor: "#FFEBEE",
-    padding: 18,
-    borderRadius: 14,
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#FFCDD2",
-  },
-  mensagemIcone: {
-    fontSize: 30,
-    marginBottom: 6,
-  },
-  mensagemTexto: {
-    fontSize: 15,
-    color: "#333",
-    fontWeight: "700",
-    textAlign: "center",
-  },
-  mensagemSubTexto: {
-    fontSize: 12,
-    color: "#666",
-    textAlign: "center",
-    marginTop: 4,
-  },
-
-  // ── Rodapé ────────────────────────────────────────────────
   rodape: {
     marginTop: 24,
     padding: 16,
-    backgroundColor: "rgba(255, 255, 255, 0.08)",
-    borderRadius: 14,
-    borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.12)",
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    borderRadius: 12,
   },
   rodapeTexto: {
     fontSize: 12,
-    color: "rgba(255,255,255,0.6)",
+    color: "#fff",
     textAlign: "center",
     lineHeight: 18,
+    marginBottom: 4,
   },
 });

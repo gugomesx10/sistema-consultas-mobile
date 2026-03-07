@@ -1,0 +1,1 @@
+export { ConsultaCard } from "./ConsultaCard";
