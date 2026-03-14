@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, ScrollView } from "react-native";
 import { StatusBar } from "expo-status-bar";
-
 import { Especialidade } from "../types/especialidade";
 import { Paciente } from "../types/paciente";
 import { Medico } from "../interfaces/medico";
