@@ -1,9 +1,8 @@
 import React from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, Button } from "react-native";
 
-// Importamos a interface Consulta que criamos na aula passada
-// Ela vem de src/interfaces/ porque é usada em VÁRIOS lugares
 import { Consulta } from "../interfaces/consulta";
+import { styles } from "../styles/consultaCard.styles";
 
 /**
  * =============================================================================
@@ -290,31 +289,8 @@ export function ConsultaCard({
   );
 }
 
-/**
- * =============================================================================
- * ESTILOS DO COMPONENTE (ENCAPSULADOS)
- * =============================================================================
- * 
- * Este é outro ponto CRUCIAL da componentização!
- * 
- * Todos os estilos relacionados ao card ficam AQUI, dentro do componente.
- * 
- * Antes da componentização:
- * - App.tsx tinha ~20 estilos misturados
- * - Estilos do card + estilos do app tudo junto
- * - Difícil de saber o que pertence a quê
- * 
- * Depois da componentização:
- * - App.tsx tem só estilos de layout geral (container, header, footer)
- * - ConsultaCard.tsx tem só estilos do card
- * - Cada um cuida do seu!
- * 
- * Isso é ENCAPSULAMENTO na prática.
- * O componente é AUTOSSUFICIENTE: tem seu JSX, sua lógica E seus estilos.
- * 
- * =============================================================================
- */
-const styles = StyleSheet.create({
+// Estilos movidos para src/styles/consultaCard.styles.ts
+/* REMOVIDO - const styles = StyleSheet.create({
   // Container principal do card
   card: {
     backgroundColor: "#fff",
@@ -421,4 +397,4 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     textAlign: "center",
   },
-});
+}); */
