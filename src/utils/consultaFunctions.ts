@@ -44,3 +44,10 @@ export function listarConsultasPorStatus(
 ): Consulta[] {
   return consultas.filter((consulta) => consulta.status === status);
 }
+
+// Atividade 2 – Listar Consultas Futuras
+export function listarConsultasFuturas(consultas: Consulta[]): Consulta[] {
+  const hoje = new Date();
+  hoje.setHours(0, 0, 0, 0); // Zera horas para comparar apenas a data
+  return consultas.filter((consulta) => consulta.data >= hoje);
+}
