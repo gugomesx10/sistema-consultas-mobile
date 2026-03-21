@@ -126,6 +126,7 @@ export function ConsultaCard({
           styles.statusBadge,
           consulta.status === "confirmada" && styles.statusConfirmada,
           consulta.status === "cancelada" && styles.statusCancelada,
+          consulta.status === "realizada" && styles.statusRealizada,
         ]}
       >
         <Text style={styles.statusTexto}>
@@ -238,9 +239,9 @@ export function ConsultaCard({
         -----------------------------------------------------------------------
       */}
       <View style={styles.acoes}>
-        {consulta.status === "agendada" && (
+        {(consulta.status === "agendada" || consulta.status === "confirmada") && (
           <>
-            {onConfirmar && (
+            {consulta.status === "agendada" && onConfirmar && (
               <View style={styles.botaoContainer}>
                 <Button
                   title="Confirmar Consulta"
@@ -282,6 +283,12 @@ export function ConsultaCard({
         {consulta.status === "cancelada" && (
           <View style={styles.mensagemCancelada}>
             <Text style={styles.mensagemTexto}>✗ Consulta cancelada</Text>
+          </View>
+        )}
+
+        {consulta.status === "realizada" && (
+          <View style={styles.mensagemRealizada}>
+            <Text style={styles.mensagemTexto}>✔ Consulta realizada</Text>
           </View>
         )}
       </View>

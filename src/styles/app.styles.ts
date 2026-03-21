@@ -8,6 +8,7 @@ export const styles = StyleSheet.create({
   scrollContent: {
     padding: 20,
     paddingTop: 60,
+    paddingBottom: 40,
   },
   header: {
     alignItems: "center",
