@@ -13,6 +13,7 @@ import {
   confirmarConsulta,
   cancelarConsulta,
   listarConsultasPorStatus,
+  listarConsultasFuturas,
 } from "../utils/consultaFunctions";
 
 // ── Especialidades ────────────────────────────────────────────────────────────
@@ -120,7 +121,7 @@ const consultasIniciais: Consulta[] = [
   consulta6,
 ];
 
-type Filtro = StatusConsulta | "todas";
+type Filtro = StatusConsulta | "todas" | "futuras";
 
 export default function Home() {
   const [consultas, setConsultas] = useState<Consulta[]>(consultasIniciais);
@@ -128,6 +129,7 @@ export default function Home() {
 
   function getConsultasFiltradas(): Consulta[] {
     if (filtro === "todas") return consultas;
+    if (filtro === "futuras") return listarConsultasFuturas(consultas);
     return listarConsultasPorStatus(consultas, filtro);
   }
 
@@ -155,6 +157,7 @@ export default function Home() {
     { label: "Confirmada", value: "confirmada" },
     { label: "Realizada", value: "realizada" },
     { label: "Cancelada", value: "cancelada" },
+    { label: "Futuras", value: "futuras" },
   ];
 
   return (
