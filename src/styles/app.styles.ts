@@ -25,4 +25,33 @@ export const styles = StyleSheet.create({
     color: "#fff",
     opacity: 0.9,
   },
+  // ── Filtros de Status ──────────────────────────────────────────────────────
+  filtrosContainer: {
+    marginBottom: 12,
+  },
+  filtroBotao: {
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+    marginRight: 8,
+  },
+  filtroBotaoAtivo: {
+    backgroundColor: "#fff",
+  },
+  filtroTexto: {
+    color: "#fff",
+    fontWeight: "600",
+    fontSize: 13,
+  },
+  filtroTextoAtivo: {
+    color: "#79059C",
+  },
+  contador: {
+    color: "#fff",
+    opacity: 0.8,
+    fontSize: 13,
+    marginBottom: 12,
+    marginLeft: 4,
+  },
 });

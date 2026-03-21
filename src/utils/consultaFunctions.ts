@@ -36,3 +36,11 @@ export function cancelarConsulta(consulta: Consulta): Consulta | null {
     status: "cancelada",
   };
 }
+
+// Atividade 1 – Listar Consultas por Status
+export function listarConsultasPorStatus(
+  consultas: Consulta[],
+  status: StatusConsulta
+): Consulta[] {
+  return consultas.filter((consulta) => consulta.status === status);
+}
