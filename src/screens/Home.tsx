@@ -14,6 +14,7 @@ import {
   cancelarConsulta,
   listarConsultasPorStatus,
   listarConsultasFuturas,
+  calcularFaturamento,
 } from "../utils/consultaFunctions";
 
 // ── Especialidades ────────────────────────────────────────────────────────────
@@ -150,6 +151,7 @@ export default function Home() {
   }
 
   const consultasFiltradas = getConsultasFiltradas();
+  const faturamento = calcularFaturamento(consultas);
 
   const filtros: { label: string; value: Filtro }[] = [
     { label: "Todas", value: "todas" },
@@ -167,6 +169,20 @@ export default function Home() {
         <View style={styles.header}>
           <Text style={styles.titulo}>Sistema de Consultas</Text>
           <Text style={styles.subtitulo}>Médicas</Text>
+        </View>
+
+        {/* Faturamento Total */}
+        <View style={styles.faturamentoCard}>
+          <Text style={styles.faturamentoLabel}>💰 Faturamento Total</Text>
+          <Text style={styles.faturamentoValor}>
+            {faturamento.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            })}
+          </Text>
+          <Text style={styles.faturamentoInfo}>
+            (somente consultas realizadas)
+          </Text>
         </View>
 
         {/* Filtros por Status */}
@@ -217,6 +233,14 @@ export default function Home() {
             }
           />
         ))}
+
+        {consultasFiltradas.length === 0 && (
+          <View style={styles.vazio}>
+            <Text style={styles.vazioTexto}>
+              Nenhuma consulta encontrada.
+            </Text>
+          </View>
+        )}
       </ScrollView>
     </View>
   );

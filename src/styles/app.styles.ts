@@ -54,4 +54,41 @@ export const styles = StyleSheet.create({
     marginBottom: 12,
     marginLeft: 4,
   },
+  // ── Faturamento ────────────────────────────────────────────────────────────
+  faturamentoCard: {
+    backgroundColor: "rgba(255, 255, 255, 0.15)",
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 16,
+    alignItems: "center",
+  },
+  faturamentoLabel: {
+    fontSize: 14,
+    color: "#fff",
+    opacity: 0.9,
+    marginBottom: 4,
+  },
+  faturamentoValor: {
+    fontSize: 28,
+    fontWeight: "bold",
+    color: "#fff",
+    marginBottom: 4,
+  },
+  faturamentoInfo: {
+    fontSize: 12,
+    color: "#fff",
+    opacity: 0.7,
+  },
+  // ── Lista vazia ────────────────────────────────────────────────────────────
+  vazio: {
+    backgroundColor: "rgba(255, 255, 255, 0.15)",
+    borderRadius: 12,
+    padding: 32,
+    alignItems: "center",
+  },
+  vazioTexto: {
+    color: "#fff",
+    fontSize: 16,
+    opacity: 0.8,
+  },
 });
