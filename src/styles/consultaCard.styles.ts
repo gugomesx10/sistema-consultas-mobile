@@ -25,6 +25,9 @@ export const styles = StyleSheet.create({
   statusCancelada: {
     backgroundColor: "#F44336",
   },
+  statusRealizada: {
+    backgroundColor: "#2196F3",
+  },
   statusTexto: {
     color: "#fff",
     fontWeight: "bold",
@@ -77,6 +80,13 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     borderLeftWidth: 4,
     borderLeftColor: "#F44336",
+  },
+  mensagemRealizada: {
+    backgroundColor: "#E3F2FD",
+    padding: 16,
+    borderRadius: 8,
+    borderLeftWidth: 4,
+    borderLeftColor: "#2196F3",
   },
   mensagemTexto: {
     fontSize: 16,
