@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Especialidade } from "../types/especialidade";
 import { Paciente } from "../types/paciente";
+import { StatusConsulta } from "../types/statusConsulta";
 import { Medico } from "../interfaces/medico";
 import { Consulta } from "../interfaces/consulta";
 import { ConsultaCard } from "../components";
@@ -11,6 +12,7 @@ import {
   criarConsulta,
   confirmarConsulta,
   cancelarConsulta,
+  listarConsultasPorStatus,
 } from "../utils/consultaFunctions";
 
 // ── Especialidades ────────────────────────────────────────────────────────────
@@ -118,8 +120,16 @@ const consultasIniciais: Consulta[] = [
   consulta6,
 ];
 
+type Filtro = StatusConsulta | "todas";
+
 export default function Home() {
   const [consultas, setConsultas] = useState<Consulta[]>(consultasIniciais);
+  const [filtro, setFiltro] = useState<Filtro>("todas");
+
+  function getConsultasFiltradas(): Consulta[] {
+    if (filtro === "todas") return consultas;
+    return listarConsultasPorStatus(consultas, filtro);
+  }
 
   function handleConfirmar(id: number) {
     setConsultas((prev) =>
@@ -137,6 +147,16 @@ export default function Home() {
     );
   }
 
+  const consultasFiltradas = getConsultasFiltradas();
+
+  const filtros: { label: string; value: Filtro }[] = [
+    { label: "Todas", value: "todas" },
+    { label: "Agendada", value: "agendada" },
+    { label: "Confirmada", value: "confirmada" },
+    { label: "Realizada", value: "realizada" },
+    { label: "Cancelada", value: "cancelada" },
+  ];
+
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
@@ -146,7 +166,38 @@ export default function Home() {
           <Text style={styles.subtitulo}>Médicas</Text>
         </View>
 
-        {consultas.map((consulta) => (
+        {/* Filtros por Status */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.filtrosContainer}
+        >
+          {filtros.map((f) => (
+            <TouchableOpacity
+              key={f.value}
+              style={[
+                styles.filtroBotao,
+                filtro === f.value && styles.filtroBotaoAtivo,
+              ]}
+              onPress={() => setFiltro(f.value)}
+            >
+              <Text
+                style={[
+                  styles.filtroTexto,
+                  filtro === f.value && styles.filtroTextoAtivo,
+                ]}
+              >
+                {f.label}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+
+        <Text style={styles.contador}>
+          {consultasFiltradas.length} consulta(s) encontrada(s)
+        </Text>
+
+        {consultasFiltradas.map((consulta) => (
           <ConsultaCard
             key={consulta.id}
             consulta={consulta}
