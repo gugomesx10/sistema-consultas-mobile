@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
+  Platform,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { medicos, pacientes } from "../data/consultasData";
@@ -18,14 +19,23 @@ export default function NovaConsultaScreen() {
   const [valor, setValor] = useState("");
   const [observacoes, setObservacoes] = useState("");
 
+  function showAlert(titulo: string, mensagem: string, onOk?: () => void) {
+    if (Platform.OS === "web") {
+      window.alert(`${titulo}\n\n${mensagem}`);
+      if (onOk) onOk();
+    } else {
+      Alert.alert(titulo, mensagem, [{ text: "OK", onPress: onOk }]);
+    }
+  }
+
   function handleCriar() {
     if (!medicoSelecionado || !pacienteSelecionado || !valor) {
-      Alert.alert("Erro", "Preencha todos os campos obrigatórios.");
+      showAlert("Erro", "Preencha todos os campos obrigatórios.");
       return;
     }
-    Alert.alert("Sucesso", "Consulta criada com sucesso!", [
-      { text: "OK", onPress: () => navigation.goBack() },
-    ]);
+    showAlert("Sucesso", "Consulta criada com sucesso!", () =>
+      navigation.goBack()
+    );
   }
 
   return (

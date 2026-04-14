@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../styles/cadastroPaciente.styles";
@@ -16,20 +18,41 @@ export default function CadastroPaciente() {
   const [cpf, setCpf] = useState("");
   const [email, setEmail] = useState("");
   const [telefone, setTelefone] = useState("");
+  const [senha, setSenha] = useState("");
+  const [confirmarSenha, setConfirmarSenha] = useState("");
+
+  function showAlert(titulo: string, mensagem: string, onOk?: () => void) {
+    if (Platform.OS === "web") {
+      window.alert(`${titulo}\n\n${mensagem}`);
+      if (onOk) onOk();
+    } else {
+      Alert.alert(titulo, mensagem, [{ text: "OK", onPress: onOk }]);
+    }
+  }
 
   function handleCadastrar() {
-    if (!nome || !cpf || !email) {
-      Alert.alert("Erro", "Preencha todos os campos obrigatórios.");
+    if (!nome || !cpf || !email || !senha) {
+      showAlert("Erro", "Preencha todos os campos obrigatórios.");
       return;
     }
-    Alert.alert("Sucesso", "Paciente cadastrado com sucesso!", [
-      { text: "OK", onPress: () => navigation.goBack() },
-    ]);
+    if (senha !== confirmarSenha) {
+      showAlert("Erro", "As senhas não coincidem.");
+      return;
+    }
+    showAlert("Sucesso", "Cadastro realizado com sucesso!\nFaça login para continuar.", () =>
+      navigation.goBack()
+    );
   }
 
   return (
-    <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        keyboardShouldPersistTaps="handled"
+      >
         <Text style={styles.titulo}>Cadastro de Paciente</Text>
         <Text style={styles.descricao}>
           Preencha os dados do novo paciente
@@ -71,6 +94,24 @@ export default function CadastroPaciente() {
           onChangeText={setTelefone}
         />
 
+        <Text style={styles.label}>Senha *</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Crie uma senha"
+          secureTextEntry
+          value={senha}
+          onChangeText={setSenha}
+        />
+
+        <Text style={styles.label}>Confirmar Senha *</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Repita a senha"
+          secureTextEntry
+          value={confirmarSenha}
+          onChangeText={setConfirmarSenha}
+        />
+
         <TouchableOpacity
           style={styles.botaoCadastrar}
           onPress={handleCadastrar}
@@ -85,6 +126,6 @@ export default function CadastroPaciente() {
           <Text style={styles.botaoVoltarTexto}>Voltar</Text>
         </TouchableOpacity>
       </ScrollView>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
