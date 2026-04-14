@@ -11,16 +11,18 @@ import Login from "./src/screens/Login";
 import CadastroPaciente from "./src/screens/CadastroPaciente";
 import MinhasConsultas from "./src/screens/MinhasConsultas";
 
+//aqui é o arquivo principal do app, onde configuro a navegação entre as telas
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
+    //AppProvider envolve tudo pra todas as telas terem acesso aos dados globais
     <AppProvider>
       <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Login"
+        initialRouteName="Login" //a primeira tela que aparece é o Login
         screenOptions={{
-          headerStyle: { backgroundColor: "#79059C" },
+          headerStyle: { backgroundColor: "#79059C" }, //cor roxa no cabeçalho
           headerTintColor: "#fff",
           headerTitleStyle: { fontWeight: "bold" },
         }}

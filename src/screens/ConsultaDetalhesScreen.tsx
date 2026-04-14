@@ -8,12 +8,13 @@ import styles from "../styles/consultaDetalhes.styles";
 
 type DetalhesRoute = RouteProp<RootStackParamList, "ConsultaDetalhes">;
 
+//aqui é a tela de detalhes, mostra todas as informações de uma consulta específica
 export default function ConsultaDetalhesScreen() {
   const route = useRoute<DetalhesRoute>();
-  const { consultaId } = route.params;
+  const { consultaId } = route.params; //pega o id que veio da tela anterior
   const { consultas } = useAppContext();
 
-  const consulta = consultas.find((c) => c.id === consultaId);
+  const consulta = consultas.find((c) => c.id === consultaId); //busca a consulta pelo id
 
   if (!consulta) {
     return (

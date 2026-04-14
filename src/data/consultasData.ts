@@ -7,7 +7,9 @@ import {
   confirmarConsulta,
 } from "../utils/consultaFunctions";
 
-// ── Especialidades ────────────────────────────────────────────────────────────
+//aqui criei os dados iniciais do app, tipo um banco de dados fake
+
+//especialidades que os médicos podem ter
 export const cardiologia: Especialidade = { id: 1, nome: "Cardiologia" };
 export const ortopedia: Especialidade = {
   id: 2,
@@ -16,7 +18,7 @@ export const ortopedia: Especialidade = {
 };
 export const pediatria: Especialidade = { id: 3, nome: "Pediatria" };
 
-// ── Médicos ───────────────────────────────────────────────────────────────────
+//médicos cadastrados no sistema
 export const medico1: Medico = {
   id: 1,
   nome: "Dr. Roberto Silva",
@@ -41,7 +43,7 @@ export const medico3: Medico = {
 
 export const medicos: Medico[] = [medico1, medico2, medico3];
 
-// ── Pacientes ─────────────────────────────────────────────────────────────────
+//pacientes que já vem cadastrados, mas dá pra cadastrar novos pelo app
 export const paciente1: Paciente = {
   id: 1,
   nome: "Carlos Andrade",
@@ -65,7 +67,8 @@ export const paciente3: Paciente = {
 
 export const pacientes: Paciente[] = [paciente1, paciente2, paciente3];
 
-// ── Consultas ─────────────────────────────────────────────────────────────────
+//aqui criei as consultas de exemplo usando as funções que fiz no consultaFunctions
+//algumas já começam confirmadas, realizadas ou canceladas pra testar
 const consulta1 = criarConsulta(1, medico1, paciente1, new Date(2026, 3, 28), 350);
 const consulta2 = confirmarConsulta(
   criarConsulta(2, medico2, paciente2, new Date(2026, 3, 25), 280)

@@ -15,14 +15,17 @@ import styles from "../styles/minhasConsultas.styles";
 
 type MinhasConsultasNav = NativeStackNavigationProp<RootStackParamList, "MinhasConsultas">;
 
+//aqui é a tela que mostra só as consultas do paciente que tá logado
 export default function MinhasConsultas() {
   const navigation = useNavigation<MinhasConsultasNav>();
-  const { consultas, pacienteLogado } = useAppContext();
+  const { consultas, pacienteLogado } = useAppContext(); //pega as consultas e quem tá logado
 
+  //filtra só as consultas que são do paciente logado
   const minhasConsultas: Consulta[] = pacienteLogado
     ? consultas.filter((c) => c.paciente.id === pacienteLogado.id)
     : [];
 
+  //mesma função de cor pro badge de status
   function getStatusColor(status: StatusConsulta): string {
     switch (status) {
       case "agendada":

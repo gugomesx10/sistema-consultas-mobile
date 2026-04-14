@@ -15,11 +15,13 @@ import styles from "../styles/home.styles";
 
 type HomeNav = NativeStackNavigationProp<RootStackParamList, "Home">;
 
+//aqui é a tela principal do app, mostra o resumo das consultas
 export default function HomeScreen() {
   const navigation = useNavigation<HomeNav>();
-  const { consultas } = useAppContext();
-  const faturamento = calcularFaturamento(consultas);
+  const { consultas } = useAppContext(); //pega as consultas do contexto global
+  const faturamento = calcularFaturamento(consultas); //calcula o faturamento usando a função que criei
 
+  //aqui calculo as estatísticas pra mostrar nos cards
   const totalConsultas = consultas.length;
   const agendadas = consultas.filter((c) => c.status === "agendada").length;
   const realizadas = consultas.filter((c) => c.status === "realizada").length;
@@ -61,6 +63,7 @@ export default function HomeScreen() {
           </View>
         </View>
 
+        //botões do menu principal, cada um navega pra uma tela diferente
         <TouchableOpacity
           style={styles.menuBotao}
           onPress={() => navigation.navigate("ConsultasList")}

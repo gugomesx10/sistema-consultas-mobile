@@ -3,6 +3,7 @@ import { Paciente } from "../types/paciente";
 import { StatusConsulta } from "../types/statusConsulta";
 import { Consulta } from "../interfaces/consulta";
 
+//aqui eu criei a função pra criar uma consulta nova, já começa com status "agendada"
 export function criarConsulta(
   id: number,
   medico: Medico,
@@ -20,6 +21,7 @@ export function criarConsulta(
   };
 }
 
+//aqui confirma a consulta, usa spread operator pra copiar e só muda o status
 export function confirmarConsulta(consulta: Consulta): Consulta {
   return {
     ...consulta,
@@ -27,6 +29,7 @@ export function confirmarConsulta(consulta: Consulta): Consulta {
   };
 }
 
+//aqui cancela a consulta, mas se já foi realizada retorna null (não pode cancelar)
 export function cancelarConsulta(consulta: Consulta): Consulta | null {
   if (consulta.status === "realizada") {
     return null;
@@ -37,7 +40,7 @@ export function cancelarConsulta(consulta: Consulta): Consulta | null {
   };
 }
 
-// Atividade 1 – Listar Consultas por Status
+//aqui filtra as consultas pelo status, ex: só as agendadas, só as canceladas...
 export function listarConsultasPorStatus(
   consultas: Consulta[],
   status: StatusConsulta
@@ -45,14 +48,15 @@ export function listarConsultasPorStatus(
   return consultas.filter((consulta) => consulta.status === status);
 }
 
-// Atividade 2 – Listar Consultas Futuras
+//aqui pega só as consultas futuras, compara a data da consulta com a data de hoje
 export function listarConsultasFuturas(consultas: Consulta[]): Consulta[] {
   const hoje = new Date();
-  hoje.setHours(0, 0, 0, 0); // Zera horas para comparar apenas a data
+  hoje.setHours(0, 0, 0, 0);
   return consultas.filter((consulta) => consulta.data >= hoje);
 }
 
-// Atividade 4 – Calcular Faturamento (somente consultas realizadas)
+//aqui calcula o faturamento somando o valor só das consultas realizadas
+//usei filter + reduce pra isso
 export function calcularFaturamento(consultas: Consulta[]): number {
   return consultas
     .filter((consulta) => consulta.status === "realizada")

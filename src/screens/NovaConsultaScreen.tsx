@@ -13,9 +13,10 @@ import { medicos } from "../data/consultasData";
 import styles from "../styles/novaConsulta.styles";
 import { useAppContext } from "../context/AppContext";
 
+//aqui é a tela pra agendar uma consulta nova
 export default function NovaConsultaScreen() {
   const navigation = useNavigation();
-  const { pacientes, consultas, adicionarConsulta } = useAppContext();
+  const { pacientes, consultas, adicionarConsulta } = useAppContext(); //pego pacientes e consultas do contexto
   const [medicoSelecionado, setMedicoSelecionado] = useState<number | null>(null);
   const [pacienteSelecionado, setPacienteSelecionado] = useState<number | null>(null);
   const [valor, setValor] = useState("");
@@ -30,6 +31,7 @@ export default function NovaConsultaScreen() {
     }
   }
 
+  //aqui cria a consulta quando clica no botão, pega o médico e paciente selecionados
   function handleCriar() {
     if (!medicoSelecionado || !pacienteSelecionado || !valor) {
       showAlert("Erro", "Preencha todos os campos obrigatórios.");
@@ -37,6 +39,7 @@ export default function NovaConsultaScreen() {
     }
     const medico = medicos.find((m) => m.id === medicoSelecionado)!;
     const paciente = pacientes.find((p) => p.id === pacienteSelecionado)!;
+    //monta o objeto da consulta e adiciona no contexto global
     const novaConsulta = {
       id: consultas.length + 1,
       medico,

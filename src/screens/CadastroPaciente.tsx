@@ -13,9 +13,10 @@ import { useNavigation } from "@react-navigation/native";
 import styles from "../styles/cadastroPaciente.styles";
 import { useAppContext } from "../context/AppContext";
 
+//aqui é a tela de cadastro de paciente
 export default function CadastroPaciente() {
   const navigation = useNavigation();
-  const { pacientes, adicionarPaciente } = useAppContext();
+  const { pacientes, adicionarPaciente } = useAppContext(); //pego a lista e a função pra adicionar
   const [nome, setNome] = useState("");
   const [cpf, setCpf] = useState("");
   const [email, setEmail] = useState("");
@@ -23,6 +24,7 @@ export default function CadastroPaciente() {
   const [senha, setSenha] = useState("");
   const [confirmarSenha, setConfirmarSenha] = useState("");
 
+  //essa função trata o alert pra funcionar tanto no celular quanto na web
   function showAlert(titulo: string, mensagem: string, onOk?: () => void) {
     if (Platform.OS === "web") {
       window.alert(`${titulo}\n\n${mensagem}`);
@@ -32,15 +34,17 @@ export default function CadastroPaciente() {
     }
   }
 
+  //aqui é quando clica em cadastrar, valida os campos e salva o paciente no contexto
   function handleCadastrar() {
     if (!nome || !cpf || !email || !senha) {
       showAlert("Erro", "Preencha todos os campos obrigatórios.");
       return;
     }
     if (senha !== confirmarSenha) {
-      showAlert("Erro", "As senhas não coincidem.");
+      showAlert("Erro", "As senhas não coincidem."); //verifica se as senhas batem
       return;
     }
+    //cria o objeto do paciente novo e adiciona no contexto global
     const novoPaciente = {
       id: pacientes.length + 1,
       nome,

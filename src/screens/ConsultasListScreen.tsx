@@ -20,25 +20,29 @@ import { useAppContext } from "../context/AppContext";
 import styles from "../styles/consultasList.styles";
 
 type ConsultasListNav = NativeStackNavigationProp<RootStackParamList, "ConsultasList">;
-type Filtro = StatusConsulta | "todas" | "futuras";
+type Filtro = StatusConsulta | "todas" | "futuras"; //os filtros possíveis
 
+//aqui é a tela que lista todas as consultas com filtro
 export default function ConsultasListScreen() {
   const navigation = useNavigation<ConsultasListNav>();
-  const { consultas, setConsultas } = useAppContext();
+  const { consultas, setConsultas } = useAppContext(); //pega as consultas do contexto global
   const [filtro, setFiltro] = useState<Filtro>("todas");
 
+  //filtra as consultas de acordo com o filtro selecionado
   function getConsultasFiltradas(): Consulta[] {
     if (filtro === "todas") return consultas;
     if (filtro === "futuras") return listarConsultasFuturas(consultas);
     return listarConsultasPorStatus(consultas, filtro);
   }
 
+  //aqui confirma uma consulta, muda o status dela pra "confirmada"
   function handleConfirmar(id: number) {
     setConsultas((prev) =>
       prev.map((c) => (c.id === id ? confirmarConsulta(c) : c))
     );
   }
 
+  //aqui cancela uma consulta, mas se já foi realizada não deixa cancelar
   function handleCancelar(id: number) {
     setConsultas((prev) =>
       prev.map((c) => {
@@ -51,6 +55,7 @@ export default function ConsultasListScreen() {
 
   const consultasFiltradas = getConsultasFiltradas();
 
+  //aqui defini os filtros que aparecem em cima da lista
   const filtros: { label: string; value: Filtro }[] = [
     { label: "Todas", value: "todas" },
     { label: "Agendada", value: "agendada" },
@@ -60,6 +65,7 @@ export default function ConsultasListScreen() {
     { label: "Futuras", value: "futuras" },
   ];
 
+  //essa função retorna a cor de acordo com o status, pra mostrar no badge colorido
   function getStatusColor(status: StatusConsulta): string {
     switch (status) {
       case "agendada":
