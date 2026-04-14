@@ -13,11 +13,13 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/types";
 import styles from "../styles/login.styles";
+import { useAppContext } from "../context/AppContext";
 
 type LoginNav = NativeStackNavigationProp<RootStackParamList, "Login">;
 
 export default function Login() {
   const navigation = useNavigation<LoginNav>();
+  const { pacientes, setPacienteLogado } = useAppContext();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
@@ -29,6 +31,10 @@ export default function Login() {
         Alert.alert("Erro", "Preencha e-mail e senha.");
       }
       return;
+    }
+    const paciente = pacientes.find((p) => p.email === email);
+    if (paciente) {
+      setPacienteLogado(paciente);
     }
     navigation.reset({ index: 0, routes: [{ name: "Home" }] });
   }

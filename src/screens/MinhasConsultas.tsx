@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   Text,
@@ -10,18 +10,18 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/types";
 import { StatusConsulta } from "../types/statusConsulta";
 import { Consulta } from "../interfaces/consulta";
-import { consultasIniciais, paciente1 } from "../data/consultasData";
+import { useAppContext } from "../context/AppContext";
 import styles from "../styles/minhasConsultas.styles";
 
 type MinhasConsultasNav = NativeStackNavigationProp<RootStackParamList, "MinhasConsultas">;
 
 export default function MinhasConsultas() {
   const navigation = useNavigation<MinhasConsultasNav>();
+  const { consultas, pacienteLogado } = useAppContext();
 
-  // Simula consultas do paciente logado (paciente1)
-  const minhasConsultas: Consulta[] = consultasIniciais.filter(
-    (c) => c.paciente.id === paciente1.id
-  );
+  const minhasConsultas: Consulta[] = pacienteLogado
+    ? consultas.filter((c) => c.paciente.id === pacienteLogado.id)
+    : [];
 
   function getStatusColor(status: StatusConsulta): string {
     switch (status) {
@@ -41,7 +41,7 @@ export default function MinhasConsultas() {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <Text style={styles.titulo}>Minhas Consultas</Text>
         <Text style={styles.descricao}>
-          Consultas de {paciente1.nome}
+          Consultas de {pacienteLogado?.nome ?? "Paciente"}
         </Text>
 
         {minhasConsultas.map((consulta) => (

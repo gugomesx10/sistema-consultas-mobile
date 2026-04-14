@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   Text,
@@ -9,7 +9,7 @@ import { StatusBar } from "expo-status-bar";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/types";
-import { consultasIniciais } from "../data/consultasData";
+import { useAppContext } from "../context/AppContext";
 import { calcularFaturamento } from "../utils/consultaFunctions";
 import styles from "../styles/home.styles";
 
@@ -17,11 +17,12 @@ type HomeNav = NativeStackNavigationProp<RootStackParamList, "Home">;
 
 export default function HomeScreen() {
   const navigation = useNavigation<HomeNav>();
-  const faturamento = calcularFaturamento(consultasIniciais);
+  const { consultas } = useAppContext();
+  const faturamento = calcularFaturamento(consultas);
 
-  const totalConsultas = consultasIniciais.length;
-  const agendadas = consultasIniciais.filter((c) => c.status === "agendada").length;
-  const realizadas = consultasIniciais.filter((c) => c.status === "realizada").length;
+  const totalConsultas = consultas.length;
+  const agendadas = consultas.filter((c) => c.status === "agendada").length;
+  const realizadas = consultas.filter((c) => c.status === "realizada").length;
 
   return (
     <View style={styles.container}>

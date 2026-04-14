@@ -10,13 +10,13 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/types";
 import { StatusConsulta } from "../types/statusConsulta";
 import { Consulta } from "../interfaces/consulta";
-import { consultasIniciais } from "../data/consultasData";
 import {
   listarConsultasPorStatus,
   listarConsultasFuturas,
   confirmarConsulta,
   cancelarConsulta,
 } from "../utils/consultaFunctions";
+import { useAppContext } from "../context/AppContext";
 import styles from "../styles/consultasList.styles";
 
 type ConsultasListNav = NativeStackNavigationProp<RootStackParamList, "ConsultasList">;
@@ -24,7 +24,7 @@ type Filtro = StatusConsulta | "todas" | "futuras";
 
 export default function ConsultasListScreen() {
   const navigation = useNavigation<ConsultasListNav>();
-  const [consultas, setConsultas] = useState<Consulta[]>(consultasIniciais);
+  const { consultas, setConsultas } = useAppContext();
   const [filtro, setFiltro] = useState<Filtro>("todas");
 
   function getConsultasFiltradas(): Consulta[] {

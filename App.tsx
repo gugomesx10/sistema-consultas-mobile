@@ -2,6 +2,7 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./src/navigation/types";
+import { AppProvider } from "./src/context/AppContext";
 import HomeScreen from "./src/screens/HomeScreen";
 import ConsultasListScreen from "./src/screens/ConsultasListScreen";
 import ConsultaDetalhesScreen from "./src/screens/ConsultaDetalhesScreen";
@@ -14,7 +15,8 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
-    <NavigationContainer>
+    <AppProvider>
+      <NavigationContainer>
       <Stack.Navigator
         initialRouteName="Login"
         screenOptions={{
@@ -60,5 +62,6 @@ export default function App() {
         />
       </Stack.Navigator>
     </NavigationContainer>
+    </AppProvider>
   );
 }

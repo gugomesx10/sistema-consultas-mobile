@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, ScrollView } from "react-native";
 import { useRoute, RouteProp } from "@react-navigation/native";
 import { RootStackParamList } from "../navigation/types";
-import { consultasIniciais } from "../data/consultasData";
+import { useAppContext } from "../context/AppContext";
 import { ConsultaCard } from "../components";
 import styles from "../styles/consultaDetalhes.styles";
 
@@ -11,8 +11,9 @@ type DetalhesRoute = RouteProp<RootStackParamList, "ConsultaDetalhes">;
 export default function ConsultaDetalhesScreen() {
   const route = useRoute<DetalhesRoute>();
   const { consultaId } = route.params;
+  const { consultas } = useAppContext();
 
-  const consulta = consultasIniciais.find((c) => c.id === consultaId);
+  const consulta = consultas.find((c) => c.id === consultaId);
 
   if (!consulta) {
     return (

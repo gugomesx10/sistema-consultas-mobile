@@ -11,9 +11,11 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../styles/cadastroPaciente.styles";
+import { useAppContext } from "../context/AppContext";
 
 export default function CadastroPaciente() {
   const navigation = useNavigation();
+  const { pacientes, adicionarPaciente } = useAppContext();
   const [nome, setNome] = useState("");
   const [cpf, setCpf] = useState("");
   const [email, setEmail] = useState("");
@@ -39,6 +41,14 @@ export default function CadastroPaciente() {
       showAlert("Erro", "As senhas não coincidem.");
       return;
     }
+    const novoPaciente = {
+      id: pacientes.length + 1,
+      nome,
+      cpf,
+      email,
+      telefone: telefone || undefined,
+    };
+    adicionarPaciente(novoPaciente);
     showAlert("Sucesso", "Cadastro realizado com sucesso!\nFaça login para continuar.", () =>
       navigation.goBack()
     );

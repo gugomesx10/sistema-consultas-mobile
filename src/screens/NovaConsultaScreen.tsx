@@ -9,11 +9,13 @@ import {
   Platform,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { medicos, pacientes } from "../data/consultasData";
+import { medicos } from "../data/consultasData";
 import styles from "../styles/novaConsulta.styles";
+import { useAppContext } from "../context/AppContext";
 
 export default function NovaConsultaScreen() {
   const navigation = useNavigation();
+  const { pacientes, consultas, adicionarConsulta } = useAppContext();
   const [medicoSelecionado, setMedicoSelecionado] = useState<number | null>(null);
   const [pacienteSelecionado, setPacienteSelecionado] = useState<number | null>(null);
   const [valor, setValor] = useState("");
@@ -33,6 +35,18 @@ export default function NovaConsultaScreen() {
       showAlert("Erro", "Preencha todos os campos obrigatórios.");
       return;
     }
+    const medico = medicos.find((m) => m.id === medicoSelecionado)!;
+    const paciente = pacientes.find((p) => p.id === pacienteSelecionado)!;
+    const novaConsulta = {
+      id: consultas.length + 1,
+      medico,
+      paciente,
+      data: new Date(),
+      valor: Number(valor),
+      status: "agendada" as const,
+      observacoes: observacoes || undefined,
+    };
+    adicionarConsulta(novaConsulta);
     showAlert("Sucesso", "Consulta criada com sucesso!", () =>
       navigation.goBack()
     );
