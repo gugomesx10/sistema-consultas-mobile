@@ -91,12 +91,13 @@
     }
 
     /* SCREENSHOTS */
-    .screenshot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0; }
-    .screenshot-grid.odd-last { }
-    .screenshot-item { text-align: center; }
+    .screenshot-item { 
+      text-align: center; break-inside: avoid; page-break-inside: avoid;
+      max-width: 400px; margin: 8px auto;
+    }
     .screenshot-box { 
       border: 2px solid #79059C; border-radius: 10px; 
-      height: 320px; display: flex; align-items: center; justify-content: center; 
+      height: 240px; display: flex; align-items: center; justify-content: center; 
       background: #faf5ff; overflow: hidden;
     }
     .screenshot-box img { 
@@ -105,7 +106,7 @@
     }
     .screenshot-label { 
       font-size: 12px; font-weight: 600; color: #79059C; 
-      text-align: center; margin-top: 6px; margin-bottom: 4px;
+      text-align: center; margin-top: 4px; margin-bottom: 2px;
     }
 
     /* TYPES */
@@ -348,41 +349,45 @@
   </table>
 </div>
 
-<!-- ==================== PÁGINA 5 - SCREENSHOTS ==================== -->
+<!-- ==================== PÁGINA 5 - SCREENSHOTS (1/2) ==================== -->
 <div class="page">
   <h2>4. Screenshots do App Funcionando</h2>
-  <p>Prints tirados do app rodando no navegador via <code>localhost:8081</code> (Expo Web).</p>
+  <p style="font-size: 12px; margin-bottom: 6px;">Prints tirados do app rodando no navegador via <code>localhost:8081</code> (Expo Web).</p>
 
-  <div class="screenshot-grid">
-    <div class="screenshot-item">
-      <p class="screenshot-label">Tela de Login</p>
-      <div class="screenshot-box">
-        <img src="prints/login.png" />
-      </div>
+  <div class="screenshot-item">
+    <p class="screenshot-label">Tela de Login</p>
+    <div class="screenshot-box">
+      <img src="prints/login.png" />
     </div>
-    <div class="screenshot-item">
-      <p class="screenshot-label">Tela Home (Menu Principal)</p>
-      <div class="screenshot-box">
-        <img src="prints/home.png" />
-      </div>
+  </div>
+  <div class="screenshot-item">
+    <p class="screenshot-label">Tela Home (Menu Principal)</p>
+    <div class="screenshot-box">
+      <img src="prints/home.png" />
     </div>
-    <div class="screenshot-item">
-      <p class="screenshot-label">Lista de Consultas (com filtros)</p>
-      <div class="screenshot-box">
-        <img src="prints/consultas-list.png" />
-      </div>
+  </div>
+  <div class="screenshot-item">
+    <p class="screenshot-label">Lista de Consultas (com filtros)</p>
+    <div class="screenshot-box">
+      <img src="prints/consultas-list.png" />
     </div>
-    <div class="screenshot-item">
-      <p class="screenshot-label">Detalhes da Consulta</p>
-      <div class="screenshot-box">
-        <img src="prints/consulta-detalhes.png" />
-      </div>
+  </div>
+</div>
+
+<!-- ==================== PÁGINA 5 - SCREENSHOTS (2/2) ==================== -->
+<div class="page">
+  <h2 style="margin-bottom: 8px;">4. Screenshots do App <small>(continuação)</small></h2>
+
+  <div class="screenshot-item">
+    <p class="screenshot-label">Detalhes da Consulta</p>
+    <div class="screenshot-box">
+      <img src="prints/consulta-detalhes.png" />
     </div>
-    <div class="screenshot-item">
-      <p class="screenshot-label">Nova Consulta (Agendamento)</p>
-      <div class="screenshot-box">
-        <img src="prints/nova-consulta.png" />
-      </div>
+  </div>
+  <div class="screenshot-item">
+    <p class="screenshot-label">Nova Consulta (Agendamento)</p>
+    <div class="screenshot-box">
+      <img src="prints/nova-consulta.png" />
     </div>
   </div>
 </div>
@@ -517,7 +522,6 @@
 
   <div class="highlight-box" style="margin-top: 20px;">
     <strong>Repositório GitHub:</strong> <code>https://github.com/gugomesx10/sistema-consultas-mobile</code><br>
-    <strong>Branch:</strong> <code>rm555999</code> — Todas as 7 branches <code>feat/styles-*</code> mergeadas com sucesso.
   </div>
 </div>
 
