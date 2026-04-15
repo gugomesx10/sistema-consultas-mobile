@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>CP2 - Gustavo Gomes Martins - RM555999</title>
+  <style>
+    @page { margin: 1.5cm; size: A4; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #222; line-height: 1.5; background: #fff; }
+    
+    /* CAPA */
+    .capa { 
+      page-break-after: always; 
+      display: flex; flex-direction: column; align-items: center; justify-content: center; 
+      min-height: 95vh; text-align: center; 
+    }
+    .capa-logo { font-size: 64px; margin-bottom: 20px; }
+    .capa h1 { font-size: 28px; color: #79059C; margin-bottom: 8px; }
+    .capa h2 { font-size: 20px; color: #555; font-weight: 400; margin-bottom: 40px; }
+    .capa .info-box { 
+      background: #f8f0ff; border: 2px solid #79059C; border-radius: 12px; 
+      padding: 24px 48px; text-align: left; 
+    }
+    .capa .info-box p { font-size: 16px; margin: 6px 0; }
+    .capa .info-box strong { color: #79059C; }
+    .capa .footer-capa { margin-top: 40px; color: #888; font-size: 14px; }
+
+    /* GERAL */
+    .page { page-break-after: always; padding: 10px 0; }
+    .page:last-child { page-break-after: avoid; }
+    h2 { font-size: 22px; color: #79059C; border-bottom: 3px solid #79059C; padding-bottom: 6px; margin-bottom: 16px; }
+    h3 { font-size: 17px; color: #333; margin: 14px 0 8px; }
+    p, li { font-size: 14px; }
+    ul { margin-left: 20px; margin-bottom: 10px; }
+    li { margin-bottom: 4px; }
+
+    /* TABELA */
+    table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+    th { background: #79059C; color: #fff; padding: 8px 10px; text-align: left; }
+    td { padding: 7px 10px; border-bottom: 1px solid #ddd; }
+    tr:nth-child(even) { background: #f9f4ff; }
+
+    /* CÓDIGO */
+    .code-block { 
+      background: #1e1e2e; color: #cdd6f4; border-radius: 8px; 
+      padding: 12px 16px; font-family: 'Cascadia Code', 'Consolas', monospace; 
+      font-size: 12px; overflow-x: auto; margin: 8px 0 14px; white-space: pre; 
+    }
+    .code-block .comment { color: #6c7086; }
+    .code-block .keyword { color: #cba6f7; }
+    .code-block .string { color: #a6e3a1; }
+    .code-block .func { color: #89b4fa; }
+
+    /* BADGE */
+    .badge { 
+      display: inline-block; padding: 3px 10px; border-radius: 12px; 
+      font-size: 11px; font-weight: 600; color: #fff; margin-right: 6px; 
+    }
+    .badge-feat { background: #79059C; }
+    .badge-branch { background: #2196F3; }
+    .badge-merged { background: #4CAF50; }
+    .badge-file { background: #FF9800; }
+
+    /* ESTRUTURA */
+    .tree { 
+      background: #f5f5f5; border-radius: 8px; padding: 14px 18px; 
+      font-family: 'Cascadia Code', 'Consolas', monospace; font-size: 13px; 
+      margin: 10px 0; line-height: 1.6; 
+    }
+    .tree .folder { color: #79059C; font-weight: 600; }
+    .tree .new-file { color: #4CAF50; font-weight: 600; }
+    .tree .modified { color: #2196F3; }
+
+    /* FLOW */
+    .flow-step { 
+      display: flex; align-items: flex-start; margin: 10px 0; 
+    }
+    .flow-num { 
+      background: #79059C; color: #fff; min-width: 28px; height: 28px; 
+      border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+      font-weight: 700; font-size: 14px; margin-right: 12px; flex-shrink: 0; 
+    }
+    .flow-text { font-size: 14px; padding-top: 3px; }
+
+    .two-col { display: flex; gap: 16px; }
+    .two-col > div { flex: 1; }
+
+    .highlight-box { 
+      background: #f0faf0; border-left: 4px solid #4CAF50; 
+      padding: 10px 14px; margin: 10px 0; border-radius: 0 8px 8px 0; 
+    }
+  </style>
+</head>
+<body>
+
+<!-- ==================== CAPA ==================== -->
+<div class="capa">
+  <div class="capa-logo">🏥</div>
+  <h1>CHECKPOINT 2 (CP2)</h1>
+  <h2>Refatoração de Styles — Sistema de Consultas Mobile</h2>
+  <div class="info-box">
+    <p><strong>Aluno:</strong> Gustavo Gomes Martins</p>
+    <p><strong>RM:</strong> 555999</p>
+    <p><strong>Tipo:</strong> Trabalho Individual</p>
+    <p><strong>Tecnologias:</strong> React Native + Expo + TypeScript</p>
+    <p><strong>Repositório:</strong> github.com/gugomesx10/sistema-consultas-mobile</p>
+    <p><strong>Branch principal:</strong> rm555999</p>
+  </div>
+  <p class="footer-capa">Data de entrega: 15/04/2026</p>
+</div>
+
+<!-- ==================== PÁGINA 2 - OBJETIVO E ESTRUTURA ==================== -->
+<div class="page">
+  <h2>1. Objetivo da Atividade</h2>
+  <p>Refatorar a organização dos estilos do projeto, separando os <code>StyleSheet.create</code> que estavam dentro de cada tela para arquivos dedicados na pasta <code>src/styles/</code>, mantendo a aplicação 100% funcional.</p>
+
+  <h3>Conceitos aplicados</h3>
+  <ul>
+    <li>Separação de responsabilidades (UI vs Styles)</li>
+    <li>Organização de arquivos (estrutura de pastas)</li>
+    <li>Git Flow com branches e merges (--no-ff)</li>
+    <li>Commits semânticos descritivos</li>
+  </ul>
+
+  <h3>Estrutura final do projeto</h3>
+  <div class="tree">
+    <span class="folder">src/</span><br>
+    <span class="folder">├── screens/</span><br>
+    │&nbsp;&nbsp; ├── <span class="modified">HomeScreen.tsx</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <small>(apenas componente)</small><br>
+    │&nbsp;&nbsp; ├── <span class="modified">ConsultasListScreen.tsx</span> &nbsp;&nbsp; <small>(apenas componente)</small><br>
+    │&nbsp;&nbsp; ├── <span class="modified">ConsultaDetalhesScreen.tsx</span> <small>(apenas componente)</small><br>
+    │&nbsp;&nbsp; ├── <span class="modified">NovaConsultaScreen.tsx</span> &nbsp;&nbsp;&nbsp; <small>(apenas componente)</small><br>
+    │&nbsp;&nbsp; ├── <span class="modified">Login.tsx</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <small>(apenas componente)</small><br>
+    │&nbsp;&nbsp; ├── <span class="modified">CadastroPaciente.tsx</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <small>(apenas componente)</small><br>
+    │&nbsp;&nbsp; └── <span class="modified">MinhasConsultas.tsx</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <small>(apenas componente)</small><br>
+    <span class="folder">├── styles/</span><br>
+    │&nbsp;&nbsp; ├── <span class="new-file">home.styles.ts</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <small>(✅ novo)</small><br>
+    │&nbsp;&nbsp; ├── <span class="new-file">consultasList.styles.ts</span> &nbsp;&nbsp; <small>(✅ novo)</small><br>
+    │&nbsp;&nbsp; ├── <span class="new-file">consultaDetalhes.styles.ts</span> <small>(✅ novo)</small><br>
+    │&nbsp;&nbsp; ├── <span class="new-file">novaConsulta.styles.ts</span> &nbsp;&nbsp;&nbsp; <small>(✅ novo)</small><br>
+    │&nbsp;&nbsp; ├── <span class="new-file">login.styles.ts</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <small>(✅ novo)</small><br>
+    │&nbsp;&nbsp; ├── <span class="new-file">cadastroPaciente.styles.ts</span> <small>(✅ novo)</small><br>
+    │&nbsp;&nbsp; └── <span class="new-file">minhasConsultas.styles.ts</span> &nbsp;<small>(✅ novo)</small><br>
+    <span class="folder">├── context/</span><br>
+    │&nbsp;&nbsp; └── AppContext.tsx<br>
+    <span class="folder">├── components/</span><br>
+    <span class="folder">├── interfaces/</span><br>
+    <span class="folder">├── types/</span><br>
+    <span class="folder">├── utils/</span><br>
+    <span class="folder">└── data/</span>
+  </div>
+</div>
+
+<!-- ==================== PÁGINA 3 - GIT FLOW / BRANCHES ==================== -->
+<div class="page">
+  <h2>2. Git Flow — Branches e Merges</h2>
+  <p>Trabalhei individualmente, criando <strong>uma branch para cada tela</strong> conforme solicitado. Todas as branches foram criadas a partir da <code>rm555999</code>, e depois mergeadas de volta com <code>--no-ff</code>.</p>
+
+  <table>
+    <tr>
+      <th>#</th>
+      <th>Tela refatorada</th>
+      <th>Branch</th>
+      <th>Commit</th>
+      <th>Status</th>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>HomeScreen</td>
+      <td><span class="badge badge-branch">feat/styles-home</span></td>
+      <td><code>b30e962</code></td>
+      <td><span class="badge badge-merged">✅ Merged</span></td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>ConsultasListScreen</td>
+      <td><span class="badge badge-branch">feat/styles-consultas-list</span></td>
+      <td><code>b96dca8</code></td>
+      <td><span class="badge badge-merged">✅ Merged</span></td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>ConsultaDetalhesScreen</td>
+      <td><span class="badge badge-branch">feat/styles-consulta-detalhes</span></td>
+      <td><code>1e20fa8</code></td>
+      <td><span class="badge badge-merged">✅ Merged</span></td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>NovaConsultaScreen</td>
+      <td><span class="badge badge-branch">feat/styles-nova-consulta</span></td>
+      <td><code>cc99c8f</code></td>
+      <td><span class="badge badge-merged">✅ Merged</span></td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Login</td>
+      <td><span class="badge badge-branch">feat/styles-login</span></td>
+      <td><code>af1e94c</code></td>
+      <td><span class="badge badge-merged">✅ Merged</span></td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>CadastroPaciente</td>
+      <td><span class="badge badge-branch">feat/styles-cadastro</span></td>
+      <td><code>f2dd558</code></td>
+      <td><span class="badge badge-merged">✅ Merged</span></td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>MinhasConsultas</td>
+      <td><span class="badge badge-branch">feat/styles-minhas-consultas</span></td>
+      <td><code>5b7f4b6</code></td>
+      <td><span class="badge badge-merged">✅ Merged</span></td>
+    </tr>
+  </table>
+
+  <h3>Fluxo de trabalho para cada branch</h3>
+  <div class="flow-step"><div class="flow-num">1</div><div class="flow-text"><code>git checkout rm555999 && git pull</code> — atualizar a branch principal</div></div>
+  <div class="flow-step"><div class="flow-num">2</div><div class="flow-text"><code>git checkout -b feat/styles-&lt;nome&gt;</code> — criar a branch da tela</div></div>
+  <div class="flow-step"><div class="flow-num">3</div><div class="flow-text">Criar o arquivo <code>src/styles/&lt;nome&gt;.styles.ts</code> com o StyleSheet extraído</div></div>
+  <div class="flow-step"><div class="flow-num">4</div><div class="flow-text">Atualizar a tela: remover StyleSheet e adicionar <code>import styles from "../styles/&lt;nome&gt;.styles"</code></div></div>
+  <div class="flow-step"><div class="flow-num">5</div><div class="flow-text">Testar no navegador (<code>npx expo start</code>) para garantir que nada quebrou</div></div>
+  <div class="flow-step"><div class="flow-num">6</div><div class="flow-text"><code>git add . && git commit -m "refactor: extrair styles..."</code></div></div>
+  <div class="flow-step"><div class="flow-num">7</div><div class="flow-text"><code>git push origin feat/styles-&lt;nome&gt;</code></div></div>
+  <div class="flow-step"><div class="flow-num">8</div><div class="flow-text"><code>git checkout rm555999 && git merge --no-ff feat/styles-&lt;nome&gt;</code> — merge de volta</div></div>
+
+  <h3>Histórico de commits (git log)</h3>
+  <div class="code-block"><span class="comment">* 9b6a345</span> docs: adicionar comentarios para apresentacao do projeto
+<span class="comment">* 201ea0d</span> feat: adicionar contexto global para persistência de dados entre telas
+<span class="comment">* 761bba2</span> fix: corrigir alerts e formulários para funcionar na web
+<span class="comment">*   c2957be</span> Merge branch 'feat/styles-minhas-consultas' into rm555999
+<span class="comment">*   e99b075</span> Merge branch 'feat/styles-cadastro' into rm555999
+<span class="comment">*   9f1eda8</span> Merge branch 'feat/styles-login' into rm555999
+<span class="comment">*   b967fd4</span> Merge branch 'feat/styles-nova-consulta' into rm555999
+<span class="comment">*   0662fe7</span> Merge branch 'feat/styles-consulta-detalhes' into rm555999
+<span class="comment">*   73c648a</span> Merge branch 'feat/styles-consultas-list' into rm555999
+<span class="comment">*   e02609e</span> Merge branch 'feat/styles-home' into rm555999
+<span class="comment">* 83b6d53</span> feat: criação das 7 telas do sistema com navegação e styles inline</div>
+</div>
+
+<!-- ==================== PÁGINA 4 - EXEMPLO DE REFATORAÇÃO ==================== -->
+<div class="page">
+  <h2>3. Exemplo de Refatoração — HomeScreen</h2>
+  <p>Mostrando o antes e depois da refatoração da tela HomeScreen como exemplo do padrão aplicado nas 7 telas.</p>
+
+  <h3>❌ ANTES — Styles dentro da tela</h3>
+  <div class="code-block"><span class="comment">// src/screens/HomeScreen.tsx — tudo junto</span>
+<span class="keyword">import</span> { View, Text, StyleSheet } <span class="keyword">from</span> <span class="string">"react-native"</span>;
+
+<span class="keyword">export default function</span> <span class="func">HomeScreen</span>() {
+  <span class="keyword">return</span> (
+    &lt;View style={styles.container}&gt;
+      &lt;Text style={styles.titulo}&gt;Sistema de Consultas&lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}
+
+<span class="comment">// styles ficavam aqui embaixo no mesmo arquivo</span>
+<span class="keyword">const</span> styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: <span class="string">"#f5f5f5"</span> },
+  titulo: { fontSize: 28, fontWeight: <span class="string">"bold"</span>, color: <span class="string">"#79059C"</span> },
+  <span class="comment">// ... mais estilos</span>
+});</div>
+
+  <h3>✅ DEPOIS — Separado em 2 arquivos</h3>
+  
+  <div class="two-col">
+    <div>
+      <p><strong>1. HomeScreen.tsx</strong> <small>(apenas componente)</small></p>
+      <div class="code-block"><span class="comment">// src/screens/HomeScreen.tsx</span>
+<span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">"react"</span>;
+<span class="keyword">import</span> { View, Text } <span class="keyword">from</span> <span class="string">"react-native"</span>;
+<span class="keyword">import</span> styles <span class="keyword">from</span> <span class="string">"../styles/home.styles"</span>;
+
+<span class="keyword">export default function</span> <span class="func">HomeScreen</span>() {
+  <span class="keyword">return</span> (
+    &lt;View style={styles.container}&gt;
+      &lt;Text style={styles.titulo}&gt;
+        Sistema de Consultas
+      &lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}</div>
+    </div>
+    <div>
+      <p><strong>2. home.styles.ts</strong> <small>(apenas estilos)</small></p>
+      <div class="code-block"><span class="comment">// src/styles/home.styles.ts</span>
+<span class="keyword">import</span> { StyleSheet } <span class="keyword">from</span> <span class="string">"react-native"</span>;
+
+<span class="keyword">const</span> styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: <span class="string">"#f5f5f5"</span>,
+  },
+  titulo: {
+    fontSize: 28,
+    fontWeight: <span class="string">"bold"</span>,
+    color: <span class="string">"#79059C"</span>,
+  },
+  <span class="comment">// ... demais estilos</span>
+});
+
+<span class="keyword">export default</span> styles;</div>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <strong>Resultado:</strong> O mesmo padrão foi aplicado para todas as 7 telas. A aplicação continuou rodando normalmente sem nenhuma alteração visual.
+  </div>
+
+  <h3>Arquivos de styles criados</h3>
+  <table>
+    <tr><th>Tela</th><th>Arquivo de styles criado</th><th>Import na tela</th></tr>
+    <tr><td>HomeScreen.tsx</td><td><span class="badge badge-file">home.styles.ts</span></td><td><code>import styles from "../styles/home.styles"</code></td></tr>
+    <tr><td>ConsultasListScreen.tsx</td><td><span class="badge badge-file">consultasList.styles.ts</span></td><td><code>import styles from "../styles/consultasList.styles"</code></td></tr>
+    <tr><td>ConsultaDetalhesScreen.tsx</td><td><span class="badge badge-file">consultaDetalhes.styles.ts</span></td><td><code>import styles from "../styles/consultaDetalhes.styles"</code></td></tr>
+    <tr><td>NovaConsultaScreen.tsx</td><td><span class="badge badge-file">novaConsulta.styles.ts</span></td><td><code>import styles from "../styles/novaConsulta.styles"</code></td></tr>
+    <tr><td>Login.tsx</td><td><span class="badge badge-file">login.styles.ts</span></td><td><code>import styles from "../styles/login.styles"</code></td></tr>
+    <tr><td>CadastroPaciente.tsx</td><td><span class="badge badge-file">cadastroPaciente.styles.ts</span></td><td><code>import styles from "../styles/cadastroPaciente.styles"</code></td></tr>
+    <tr><td>MinhasConsultas.tsx</td><td><span class="badge badge-file">minhasConsultas.styles.ts</span></td><td><code>import styles from "../styles/minhasConsultas.styles"</code></td></tr>
+  </table>
+</div>
+
+<!-- ==================== PÁGINA 5 - CHECKLIST E VALIDAÇÃO ==================== -->
+<div class="page">
+  <h2>4. Checklist de Validação</h2>
+
+  <h3>Código</h3>
+  <table>
+    <tr><th>Item</th><th>Status</th></tr>
+    <tr><td>7 arquivos criados em <code>src/styles/&lt;nome&gt;.styles.ts</code></td><td>✅ Feito</td></tr>
+    <tr><td>StyleSheet removido de todas as 7 telas</td><td>✅ Feito</td></tr>
+    <tr><td>Import correto com <code>../styles/&lt;nome&gt;.styles</code></td><td>✅ Feito</td></tr>
+    <tr><td><code>export default styles</code> em todos os arquivos de styles</td><td>✅ Feito</td></tr>
+  </table>
+
+  <h3>Funcionalidade</h3>
+  <table>
+    <tr><th>Item</th><th>Status</th></tr>
+    <tr><td>App compila sem erros TypeScript</td><td>✅ OK</td></tr>
+    <tr><td>App roda sem crashes</td><td>✅ OK</td></tr>
+    <tr><td>Todas as telas aparecem corretamente</td><td>✅ OK</td></tr>
+    <tr><td>Navegação funciona entre todas as telas</td><td>✅ OK</td></tr>
+  </table>
+
+  <h3>Git</h3>
+  <table>
+    <tr><th>Item</th><th>Status</th></tr>
+    <tr><td>7 branches criadas com prefixo <code>feat/styles-</code></td><td>✅ Feito</td></tr>
+    <tr><td>Todas mergeadas na <code>rm555999</code> com <code>--no-ff</code></td><td>✅ Feito</td></tr>
+    <tr><td>Commits com mensagens descritivas</td><td>✅ Feito</td></tr>
+    <tr><td>Push de todas as branches no GitHub</td><td>✅ Feito</td></tr>
+  </table>
+
+  <h2 style="margin-top: 30px;">5. Relatório Individual</h2>
+
+  <table>
+    <tr><th style="width:140px;">Campo</th><th>Informação</th></tr>
+    <tr><td><strong>Nome</strong></td><td>Gustavo Gomes Martins</td></tr>
+    <tr><td><strong>RM</strong></td><td>555999</td></tr>
+    <tr><td><strong>Telas refatoradas</strong></td><td>Todas as 7 (trabalho individual)</td></tr>
+  </table>
+
+  <h3 style="margin-top: 16px;">Dificuldades encontradas</h3>
+  <ul>
+    <li>No começo precisei entender bem a organização de pastas pra não errar o caminho do import (<code>../styles/</code> em vez de <code>./styles/</code>).</li>
+    <li>O <code>Alert.alert</code> do React Native não funciona na web (navegador), tive que adaptar pra usar <code>window.alert</code> quando rodava no browser.</li>
+    <li>Precisei prestar atenção pra não esquecer o <code>export default styles</code> nos arquivos de styles, senão o import quebrava.</li>
+    <li>Tive que aprender a trabalhar com branches separadas e fazer merge com <code>--no-ff</code> para manter o histórico organizado.</li>
+  </ul>
+
+  <h3>Aprendizados</h3>
+  <ul>
+    <li>Separar os estilos em arquivos dedicados deixa o código muito mais organizado e fácil de manter.</li>
+    <li>O Git Flow com branches por tela ajuda a isolar as mudanças e evitar conflitos.</li>
+    <li>Aprendi a usar React Context pra compartilhar dados entre telas sem precisar passar props manualmente.</li>
+    <li>Commits semânticos (feat:, refactor:, fix:) ajudam a entender o histórico do projeto.</li>
+    <li>A separação de responsabilidades (UI vs Styles) é uma boa prática que facilita o trabalho em equipe.</li>
+  </ul>
+
+  <div class="highlight-box" style="margin-top: 20px;">
+    <strong>Repositório GitHub:</strong> <code>https://github.com/gugomesx10/sistema-consultas-mobile</code><br>
+    <strong>Branch:</strong> <code>rm555999</code> — Todas as 7 branches <code>feat/styles-*</code> mergeadas com sucesso.
+  </div>
+</div>
+
+</body>
+</html>
