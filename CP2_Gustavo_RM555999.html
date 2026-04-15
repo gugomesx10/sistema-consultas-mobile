@@ -89,6 +89,32 @@
       background: #f0faf0; border-left: 4px solid #4CAF50; 
       padding: 10px 14px; margin: 10px 0; border-radius: 0 8px 8px 0; 
     }
+
+    /* SCREENSHOTS */
+    .screenshot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0; }
+    .screenshot-grid.odd-last { }
+    .screenshot-item { text-align: center; }
+    .screenshot-box { 
+      border: 2px solid #79059C; border-radius: 10px; 
+      height: 320px; display: flex; align-items: center; justify-content: center; 
+      background: #faf5ff; overflow: hidden;
+    }
+    .screenshot-box img { 
+      max-width: 100%; max-height: 100%; object-fit: contain; 
+      border-radius: 8px; display: block; margin: auto;
+    }
+    .screenshot-label { 
+      font-size: 12px; font-weight: 600; color: #79059C; 
+      text-align: center; margin-top: 6px; margin-bottom: 4px;
+    }
+
+    /* TYPES */
+    .type-card { 
+      background: #f8f0ff; border: 1px solid #d9b8ff; border-radius: 8px; 
+      padding: 12px 16px; margin: 8px 0; 
+    }
+    .type-card h4 { font-size: 14px; color: #79059C; margin-bottom: 6px; }
+    .type-card p { font-size: 12px; color: #555; margin-bottom: 6px; }
   </style>
 </head>
 <body>
@@ -322,9 +348,119 @@
   </table>
 </div>
 
-<!-- ==================== PÁGINA 5 - CHECKLIST E VALIDAÇÃO ==================== -->
+<!-- ==================== PÁGINA 5 - SCREENSHOTS ==================== -->
 <div class="page">
-  <h2>4. Checklist de Validação</h2>
+  <h2>4. Screenshots do App Funcionando</h2>
+  <p>Prints tirados do app rodando no navegador via <code>localhost:8081</code> (Expo Web).</p>
+
+  <div class="screenshot-grid">
+    <div class="screenshot-item">
+      <p class="screenshot-label">Tela de Login</p>
+      <div class="screenshot-box">
+        <img src="prints/login.png" />
+      </div>
+    </div>
+    <div class="screenshot-item">
+      <p class="screenshot-label">Tela Home (Menu Principal)</p>
+      <div class="screenshot-box">
+        <img src="prints/home.png" />
+      </div>
+    </div>
+    <div class="screenshot-item">
+      <p class="screenshot-label">Lista de Consultas (com filtros)</p>
+      <div class="screenshot-box">
+        <img src="prints/consultas-list.png" />
+      </div>
+    </div>
+    <div class="screenshot-item">
+      <p class="screenshot-label">Detalhes da Consulta</p>
+      <div class="screenshot-box">
+        <img src="prints/consulta-detalhes.png" />
+      </div>
+    </div>
+    <div class="screenshot-item">
+      <p class="screenshot-label">Nova Consulta (Agendamento)</p>
+      <div class="screenshot-box">
+        <img src="prints/nova-consulta.png" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PÁGINA 6 - TYPES E INTERFACES ==================== -->
+<div class="page">
+  <h2>5. Tipagem TypeScript — Types e Interfaces</h2>
+  <p>O projeto usa tipagem forte com TypeScript. Separei <code>type</code> para estruturas simples e <code>interface</code> para objetos mais complexos com relacionamentos.</p>
+
+  <h3>Types (src/types/)</h3>
+  <div class="two-col">
+    <div class="type-card">
+      <h4>📄 Especialidade <small>(type)</small></h4>
+      <p>Representa a especialidade médica (cardiologia, ortopedia, etc.)</p>
+      <div class="code-block"><span class="keyword">export type</span> Especialidade = {
+  id: <span class="func">number</span>;
+  nome: <span class="func">string</span>;
+  descricao?: <span class="func">string</span>; <span class="comment">// opcional</span>
+};</div>
+    </div>
+    <div class="type-card">
+      <h4>📄 Paciente <small>(type)</small></h4>
+      <p>Dados do paciente cadastrado no sistema</p>
+      <div class="code-block"><span class="keyword">export type</span> Paciente = {
+  id: <span class="func">number</span>;
+  nome: <span class="func">string</span>;
+  cpf: <span class="func">string</span>;
+  email: <span class="func">string</span>;
+  telefone?: <span class="func">string</span>; <span class="comment">// opcional</span>
+};</div>
+    </div>
+  </div>
+
+  <div class="type-card">
+    <h4>📄 StatusConsulta <small>(union type)</small></h4>
+    <p>Define os únicos 4 status possíveis para uma consulta — se colocar outro valor, o TypeScript dá erro.</p>
+    <div class="code-block"><span class="keyword">export type</span> StatusConsulta = <span class="string">"agendada"</span> | <span class="string">"confirmada"</span> | <span class="string">"cancelada"</span> | <span class="string">"realizada"</span>;</div>
+  </div>
+
+  <h3>Interfaces (src/interfaces/)</h3>
+  <div class="two-col">
+    <div class="type-card">
+      <h4>📋 Medico <small>(interface)</small></h4>
+      <p>Interface do médico — usa o type Especialidade como referência</p>
+      <div class="code-block"><span class="keyword">export interface</span> <span class="func">Medico</span> {
+  id: <span class="func">number</span>;
+  nome: <span class="func">string</span>;
+  crm: <span class="func">string</span>;
+  especialidade: <span class="func">Especialidade</span>;
+  ativo: <span class="func">boolean</span>;
+}</div>
+    </div>
+    <div class="type-card">
+      <h4>📋 Consulta <small>(interface)</small></h4>
+      <p>Interface principal — junta Medico, Paciente, StatusConsulta</p>
+      <div class="code-block"><span class="keyword">export interface</span> <span class="func">Consulta</span> {
+  id: <span class="func">number</span>;
+  medico: <span class="func">Medico</span>;
+  paciente: <span class="func">Paciente</span>;
+  data: <span class="func">Date</span>;
+  valor: <span class="func">number</span>;
+  status: <span class="func">StatusConsulta</span>;
+  observacoes?: <span class="func">string</span>;
+}</div>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <strong>Por que separei type e interface?</strong><br>
+    • <code>type</code> → para estruturas simples, union types e alias de tipos<br>
+    • <code>interface</code> → para objetos que têm relacionamentos com outros tipos (Medico referencia Especialidade, Consulta referencia Medico e Paciente)<br>
+    • Types ficam em <code>src/types/</code>, Interfaces ficam em <code>src/interfaces/</code>
+  </div>
+</div>
+
+<!-- ==================== PÁGINA 7 - CHECKLIST E VALIDAÇÃO ==================== -->
+<div class="page">
+  <h2>6. Checklist de Validação</h2>
 
   <h3>Código</h3>
   <table>
@@ -353,7 +489,7 @@
     <tr><td>Push de todas as branches no GitHub</td><td>✅ Feito</td></tr>
   </table>
 
-  <h2 style="margin-top: 30px;">5. Relatório Individual</h2>
+  <h2 style="margin-top: 30px;">7. Relatório Individual</h2>
 
   <table>
     <tr><th style="width:140px;">Campo</th><th>Informação</th></tr>
